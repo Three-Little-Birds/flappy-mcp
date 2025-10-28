@@ -6,6 +6,12 @@
 
 Model Context Protocol (MCP) toolkit for the [Flappy](https://github.com/purdue-biorobotics/flappy) avian dynamics simulator. It exposes typed request models, CLI execution helpers, and python-sdk integration so agents can trigger Flappy runs or fall back to the built-in sinusoidal surrogate when the binary isn’t installed.
 
+## Why you might want this
+
+- **Exercise motion controllers** – generate trajectories without hand-wiring JSON configs every time you tweak gains.
+- **Offer graceful degradation** – if `flappy_cli` isn’t deployed on a machine, the deterministic surrogate still returns a believable stroke trace for tests or demos.
+- **Archive simulation context** – responses include the generated output path (CLI mode) or the synthetic trajectory so audit logs stay complete.
+
 ## Features
 
 - Writes Flappy configuration JSON, invokes `flappy_cli`, and returns parsed trajectories.
@@ -71,6 +77,8 @@ uv pip install --system -e .[dev]
 uv run ruff check .
 uv run pytest
 ```
+
+Test cases illustrate both CLI and surrogate flows to guide readers who haven’t used Flappy before.
 
 ## License
 

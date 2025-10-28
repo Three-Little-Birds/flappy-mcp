@@ -25,6 +25,7 @@ def _fake_run(
 
 
 def test_execute_flappy_stub(monkeypatch) -> None:
+    """If the binary is missing, the deterministic surrogate should respond."""
     monkeypatch.setattr(core, "FLAPPY_BIN", "flappy_cli_missing", raising=False)
     monkeypatch.setattr(core, "_binary_exists", lambda: False)
     request = FlappyRequest(
@@ -40,6 +41,7 @@ def test_execute_flappy_stub(monkeypatch) -> None:
 
 
 def test_execute_flappy_cli(monkeypatch, tmp_path) -> None:
+    """Mock the CLI so integrators can see the expected JSON structure."""
     monkeypatch.setattr(core, "FLAPPY_BIN", "flappy_cli", raising=False)
     monkeypatch.setattr(core, "_binary_exists", lambda: True)
     monkeypatch.setattr(core.subprocess, "run", _fake_run)
@@ -60,6 +62,7 @@ def test_execute_flappy_cli(monkeypatch, tmp_path) -> None:
 
 
 def test_fastapi_endpoint(monkeypatch) -> None:
+    """Exercise the HTTP layer with a small payload."""
     monkeypatch.setattr(core, "FLAPPY_BIN", "flappy_cli_missing", raising=False)
     app = create_app()
     client = TestClient(app)
