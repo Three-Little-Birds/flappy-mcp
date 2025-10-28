@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/python-3.10+-brightgreen.svg)](pyproject.toml)
 [![CI](https://github.com/yevheniikravchuk/flappy-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/yevheniikravchuk/flappy-mcp/actions/workflows/ci.yml)
 
-Reusable Model Context Protocol (MCP) toolkit for the [Flappy](https://github.com/purdue-biorobotics/flappy) avian dynamics simulator. The package exposes typed request models, CLI execution helpers, and python-sdk integration so any project can trigger Flappy simulations or rely on a deterministic sinusoidal fallback without inheriting Orthodrone-specific schema.
+Model Context Protocol (MCP) toolkit for the [Flappy](https://github.com/purdue-biorobotics/flappy) avian dynamics simulator. It exposes typed request models, CLI execution helpers, and python-sdk integration so agents can trigger Flappy runs or fall back to the built-in sinusoidal surrogate when the binary isn’t installed.
 
 ## Features
 
