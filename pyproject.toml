@@ -19,8 +19,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yevheniikravchuk/flappy-mcp"
-Repository = "https://github.com/yevheniikravchuk/flappy-mcp"
+Homepage = "https://github.com/Three-Little-Birds/flappy-mcp"
+Repository = "https://github.com/Three-Little-Birds/flappy-mcp"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

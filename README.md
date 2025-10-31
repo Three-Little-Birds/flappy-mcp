@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-brightgreen.svg)](pyproject.toml)
-[![CI](https://github.com/yevheniikravchuk/flappy-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/yevheniikravchuk/flappy-mcp/actions/workflows/ci.yml)
+[![CI](https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml)
 
 This project wraps the [Flappy](https://github.com/purdue-biorobotics/flappy) flapping-wing simulator so that newcomers—and MCP agents—can generate motion traces with a few lines of code. It also ships with a deterministic surrogate so laptop demos never block on the full simulator.
 
@@ -29,7 +29,7 @@ export FLAPPY_BIN=/path/to/flappy_cli
 ## Step 1 – Install the MCP wrapper
 
 ```bash
-uv pip install "git+https://github.com/yevheniikravchuk/flappy-mcp.git"
+uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"
 ```
 
 ## Step 2 – Run a simulation in pure Python
