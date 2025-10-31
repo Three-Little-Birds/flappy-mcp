@@ -1,120 +1,103 @@
-# flappy-mcp · Learn Biobotics Simulation the Friendly Way
+# flappy-mcp · Bio-inspired flapping dynamics for MCP agents
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10+-brightgreen.svg)](pyproject.toml)
-[![CI](https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg" alt="Python 3.10 or newer"></a>
+  <a href="https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml"><img src="https://github.com/Three-Little-Birds/flappy-mcp/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <img src="https://img.shields.io/badge/status-incubating-ff9800.svg" alt="Project status: incubating">
+  <img src="https://img.shields.io/badge/MCP-tooling-blueviolet.svg" alt="MCP tooling badge">
+</p>
 
-This project wraps the [Flappy](https://github.com/purdue-biorobotics/flappy) flapping-wing simulator so that newcomers—and MCP agents—can generate motion traces with a few lines of code. It also ships with a deterministic surrogate so laptop demos never block on the full simulator.
+> **TL;DR**: Control the Purdue BioRobotics “Flappy” simulator through MCP so agents can explore flapping-wing dynamics and log trajectories without headless GUIs.
 
-## What you will practice
+## Table of contents
 
-- Installing `flappy_cli` and verifying a basic take-off simulation.
-- Calling the MCP helper to run Flappy (or the surrogate) and inspect the resulting wing trajectories.
-- Registering a python-sdk tool so an AI assistant can answer questions like “what is the wingtip amplitude at 7 Hz?”
+1. [Why agents love it](#why-agents-love-it)
+2. [Quickstart](#quickstart)
+3. [Run as a service](#run-as-a-service)
+4. [Agent playbook](#agent-playbook)
+5. [Stretch ideas](#stretch-ideas)
+6. [Accessibility & upkeep](#accessibility--upkeep)
+7. [Contributing](#contributing)
 
-## Set-up checklist
+## Why agents love it
 
-| Requirement | How to get it |
-|-------------|---------------|
-| `flappy_cli` binary | Build from source (instructions in the upstream README) or download a prebuilt release. |
-| Python 3.10+ with `uv` | Used for installation and examples. |
-| `numpy`/`matplotlib` (optional) | Helpful for plotting trajectories. |
+| Persona | Immediate value | Longer-term payoff |
+|---------|-----------------|--------------------|
+| **New users** | Run a flapping trajectory in two commands, retrieving position/velocity/attitude streams. | Provides learning-friendly surrogate dynamics without needing hardware-in-the-loop. |
+| **Experienced teams** | Wrap the simulator in MCP transports (REST/STDIO) for automated sweeps and policy evaluation. | Deterministic JSON outputs (`trajectory.json`, `metrics.json`) integrate with `ctrltest-mcp` and the CEE pipeline.
 
-Expose the binary if it lives outside `PATH`:
+## Quickstart
 
-```bash
-export FLAPPY_BIN=/path/to/flappy_cli
-```
-
-## Step 1 – Install the MCP wrapper
+### 1. Install the wrapper
 
 ```bash
 uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"
 ```
 
-## Step 2 – Run a simulation in pure Python
+Ensure the Flappy CLI is present; if not:
+
+```bash
+export FLAPPY_BIN=/path/to/flappy_cli
+```
+
+### 2. Simulate a trajectory
 
 ```python
-from flappy_mcp import SimulationRequest, run_flappy
+from flappy_mcp import FlappyRequest, run_flappy
 
-request = SimulationRequest(
-    frequency_hz=6.5,
-    stroke_amplitude_deg=35.0,
-    duration_s=2.0,
-    payload_mass_kg=0.15,
-)
-
+request = FlappyRequest(duration_s=5.0, timestep_s=0.01)
 response = run_flappy(request)
-print("Samples:", len(response.trajectory.samples))
-print("Energy used (approx):", response.trajectory.energy_j)
+print("Trajectory points:", len(response.trajectory))
 ```
 
-If `flappy_cli` is installed the helper writes a temporary JSON config, invokes the binary, and parses the output back into typed data. If not, the surrogate generates a sinusoidal trajectory so you can continue experimenting.
+## Run as a service
 
-## Step 3 – Visualise the motion
-
-```python
-import matplotlib.pyplot as plt
-
-samples = response.trajectory.samples
-angles = [sample.joint_angle_deg for sample in samples]
-times = [sample.time_s for sample in samples]
-
-plt.plot(times, angles)
-plt.xlabel("Time [s]")
-plt.ylabel("Wing joint angle [deg]")
-plt.show()
-```
-
-## Step 4 – Bring the simulator to an MCP agent
-
-### FastAPI quickstart
-
-```python
-from flappy_mcp.fastapi_app import create_app
-
-app = create_app()
-```
-
-Run locally:
+### FastAPI (REST)
 
 ```bash
 uv run uvicorn flappy_mcp.fastapi_app:create_app --factory --port 8004
 ```
 
-Try `/simulate` in the automatically generated docs.
+Invoke via the auto-generated docs at `http://127.0.0.1:8004/docs`.
 
-### python-sdk tool
+### python-sdk tool (STDIO / MCP)
 
 ```python
 from mcp.server.fastmcp import FastMCP
 from flappy_mcp.tool import build_tool
 
-mcp = FastMCP("flappy-mcp", "Flappy dynamics simulator")
+mcp = FastMCP("flappy-mcp", "Flapping dynamics simulator")
 build_tool(mcp)
 
 if __name__ == "__main__":
     mcp.run()
 ```
 
-Launch the tool (`uv run mcp dev examples/flappy_tool.py`) and let your MCP-aware IDE or assistant send `flappy-mcp.run` requests.
+Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 
-## Stretch goals
+## Agent playbook
 
-- **Controller tuning:** sweep `frequency_hz` and log `energy_j` to find efficient operating points.
-- **Surrogate verification:** compare the surrogate output with the real simulator in a notebook and quantify the error.
-- **Mission scripting:** chain this tool with ctrltest-mcp to evaluate closed-loop behaviour.
+- **Policy tuning** – sweep control inputs and feed trajectories into reinforcement-learning pipelines.
+- **Sensor synthesis** – generate inertial traces for testing perception/estimation stacks.
+- **Energy studies** – log `response.metrics` to correlate control patterns with consumption.
 
-## Contribute & test
+## Stretch ideas
 
-```bash
-uv pip install --system -e .[dev]
-uv run ruff check .
-uv run pytest
-```
+1. Couple with `diffsph` gradients to evaluate loads alongside motion.
+2. Feed trajectories into `ctrltest-mcp` for closed-loop evaluation.
+3. Build deck.gl overlays of position data for mission rehearsal.
 
-Unit tests stub out the binary so you can see exactly what request payloads look like and how they’re parsed.
+## Accessibility & upkeep
 
-## License
+- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.【turn0search0】
+- Tests mock the CLI: run `uv run pytest` before pushing changes.
+- Keep `FLAPPY_BIN` aligned with upstream releases for consistent physics.
 
-MIT — see [LICENSE](LICENSE).
+## Contributing
+
+1. `uv pip install --system -e .[dev]`
+2. Run `uv run ruff check .` and `uv run pytest`
+3. Submit sample trajectories or metrics with your PR so reviewers can validate quickly.
+
+MIT license — see [LICENSE](LICENSE).
