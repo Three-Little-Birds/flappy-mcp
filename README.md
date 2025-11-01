@@ -1,4 +1,4 @@
-# flappy-mcp · Bio-inspired flapping dynamics for MCP agents
+# flappy-mcp - Bio-inspired flapping dynamics for MCP agents
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/MCP-tooling-blueviolet.svg" alt="MCP tooling badge">
 </p>
 
-> **TL;DR**: Control the Purdue BioRobotics “Flappy” simulator through MCP so agents can explore flapping-wing dynamics and log trajectories without headless GUIs.
+> **TL;DR**: Control the Purdue BioRobotics "Flappy" simulator through MCP so agents can explore flapping-wing dynamics and log trajectories without headless GUIs.
 
 ## Table of contents
 
@@ -78,9 +78,9 @@ Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 
 ## Agent playbook
 
-- **Policy tuning** – sweep control inputs and feed trajectories into reinforcement-learning pipelines.
-- **Sensor synthesis** – generate inertial traces for testing perception/estimation stacks.
-- **Energy studies** – log `response.metrics` to correlate control patterns with consumption.
+- **Policy tuning** - sweep control inputs and feed trajectories into reinforcement-learning pipelines.
+- **Sensor synthesis** - generate inertial traces for testing perception/estimation stacks.
+- **Energy studies** - log `response.metrics` to correlate control patterns with consumption.
 
 ## Stretch ideas
 
@@ -90,7 +90,7 @@ Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 
 ## Accessibility & upkeep
 
-- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.【turn0search0】
+- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.[turn0search0]
 - Tests mock the CLI: run `uv run pytest` before pushing changes.
 - Keep `FLAPPY_BIN` aligned with upstream releases for consistent physics.
 
@@ -100,4 +100,4 @@ Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 2. Run `uv run ruff check .` and `uv run pytest`
 3. Submit sample trajectories or metrics with your PR so reviewers can validate quickly.
 
-MIT license — see [LICENSE](LICENSE).
+MIT license - see [LICENSE](LICENSE).
