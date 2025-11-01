@@ -85,6 +85,15 @@ if __name__ == "__main__":
 
 Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 
+### ToolHive smoke test
+
+Requires the Flappy CLI executable:
+
+```bash
+export FLAPPY_BIN=/path/to/flappy_cli
+uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
+```
+
 ## Agent playbook
 
 - **Policy tuning** - sweep control inputs and feed trajectories into reinforcement-learning pipelines.
