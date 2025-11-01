@@ -90,7 +90,7 @@ Launch with `uv run mcp dev examples/flappy_tool.py` and wire in your agent.
 
 ## Accessibility & upkeep
 
-- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.[turn0search0]
+- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.
 - Tests mock the CLI: run `uv run pytest` before pushing changes.
 - Keep `FLAPPY_BIN` aligned with upstream releases for consistent physics.
 
