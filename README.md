@@ -11,7 +11,7 @@
 
 ## Table of contents
 
-1. [Why agents love it](#why-agents-love-it)
+1. [What it provides](#what-it-provides)
 2. [Quickstart](#quickstart)
 3. [Run as a service](#run-as-a-service)
 4. [Agent playbook](#agent-playbook)
@@ -19,12 +19,13 @@
 6. [Accessibility & upkeep](#accessibility--upkeep)
 7. [Contributing](#contributing)
 
-## Why agents love it
+## What it provides
 
-| Persona | Immediate value | Longer-term payoff |
-|---------|-----------------|--------------------|
-| **New users** | Run a flapping trajectory in two commands, retrieving position/velocity/attitude streams. | Provides learning-friendly surrogate dynamics without needing hardware-in-the-loop. |
-| **Experienced teams** | Wrap the simulator in MCP transports (REST/STDIO) for automated sweeps and policy evaluation. | Deterministic JSON outputs (`trajectory.json`, `metrics.json`) integrate with `ctrltest-mcp` and the CEE pipeline.
+| Scenario | Value |
+|----------|-------|
+| Flappy CLI automation | Drive the Purdue BioRobotics [Flappy simulator](https://engineering.purdue.edu/SMARTLab/research/flappingflight) from Python or MCP without bespoke shell scripts. |
+| Trajectory logging | Collect pose, velocity, and energy histories as JSON for reinforcement learning or system-identification studies. |
+| MCP transport | Expose the CLI via STDIO/HTTP so ToolHive and other clients can batch missions or plug results into `ctrltest-mcp`.
 
 ## Quickstart
 
