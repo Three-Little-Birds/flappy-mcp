@@ -53,6 +53,15 @@ print("Trajectory points:", len(response.trajectory))
 
 ## Run as a service
 
+### CLI (STDIO transport)
+
+```bash
+uvx flappy-mcp  # runs the MCP over stdio
+# or python -m flappy_mcp
+```
+
+Use `python -m flappy_mcp --describe` to inspect metadata without starting the server.
+
 ### FastAPI (REST)
 
 ```bash
