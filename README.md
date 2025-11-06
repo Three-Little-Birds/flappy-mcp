@@ -16,7 +16,7 @@
 3. [Run as a service](#run-as-a-service)
 4. [Agent playbook](#agent-playbook)
 5. [Stretch ideas](#stretch-ideas)
-6. [Accessibility & upkeep](#accessibility--upkeep)
+6. [Install & maintenance](#install--maintenance)
 7. [Contributing](#contributing)
 
 ## What it provides
@@ -106,10 +106,11 @@ uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
 2. Feed trajectories into `ctrltest-mcp` for closed-loop evaluation.
 3. Build deck.gl overlays of position data for mission rehearsal.
 
-## Accessibility & upkeep
+## Install & maintenance
 
-- Keep `FLAPPY_BIN` aligned with upstream releases for consistent physics.
-- Document any generated trajectories or fixture updates so downstream services can replay them reliably.
+- **Runtime install:** follow the [Quickstart](#quickstart) `uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"` step on machines that need the MCP wrapper.
+- **Validate dependencies:** set `FLAPPY_BIN` to the compiled `flappy_cli` path and run `$FLAPPY_BIN --help` once to confirm the binary is reachable.
+- **Keep fixtures in sync:** document any generated trajectories or fixture updates so downstream services can replay them reliably.
 
 ## Contributing
 
