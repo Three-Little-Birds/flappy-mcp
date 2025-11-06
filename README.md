@@ -35,7 +35,7 @@
 uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"
 ```
 
-Build the CLI from the upstream [Flappy simulator sources](https://engineering.purdue.edu/SMARTLab/research/flappingflight) (follow their CMake instructions) and point this wrapper to the resulting binary:
+Build the CLI from the Purdue SMARTLab Flappy sources (partners receive access on request—see the [research page](https://engineering.purdue.edu/SMARTLab/research/flappingflight) for contact details) and point this wrapper to the resulting `flappy_cli` binary:
 
 ```bash
 export FLAPPY_BIN=/path/to/flappy_cli
@@ -49,7 +49,8 @@ from flappy_mcp import FlappyRequest, run_flappy
 request = FlappyRequest(duration_s=5.0, timestep_s=0.01)
 response = run_flappy(request)
 print("Trajectory points:", len(response.trajectory))
-print("Metrics keys:", response.metrics.keys())
+print("Source:", response.source)              # \"generated\" or path to CLI JSON
+print("First sample:", response.trajectory[0].model_dump())
 ```
 
 ## Run as a service
@@ -99,7 +100,7 @@ uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
 
 - **Policy tuning** - sweep control inputs and feed trajectories into reinforcement-learning pipelines.
 - **Sensor synthesis** - generate inertial traces for testing perception/estimation stacks.
-- **Energy studies** - log `response.metrics` to correlate control patterns with consumption.
+- **Energy studies** - derive energy usage from the returned stroke kinematics or augment the scenario before launching the CLI.
 
 ## Stretch ideas
 
@@ -111,6 +112,7 @@ uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
 
 - **Runtime install:** follow the [Quickstart](#quickstart) `uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"` step on machines that need the MCP wrapper.
 - **Validate dependencies:** set `FLAPPY_BIN` to the compiled `flappy_cli` path, run `$FLAPPY_BIN --help`, and confirm the simulator launches without interactive prompts.
+- **Runtime expectations:** CLI runs block until completion and may take several minutes for long scenarios; the built-in sinusoidal fallback returns instantly. All trajectories are returned as lists of `{t, angle}` samples in SI units so downstream controllers can replay them verbatim.
 - **Keep fixtures in sync:** document any generated trajectories or fixture updates so downstream services can replay them reliably.
 
 ## Contributing
