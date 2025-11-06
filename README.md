@@ -108,9 +108,8 @@ uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
 
 ## Accessibility & upkeep
 
-- Concise badges keep the hero block scannable while including descriptive alt text, following current README best practices.
-- Tests mock the CLI: run `uv run pytest` before pushing changes.
 - Keep `FLAPPY_BIN` aligned with upstream releases for consistent physics.
+- Document any generated trajectories or fixture updates so downstream services can replay them reliably.
 
 ## Contributing
 
