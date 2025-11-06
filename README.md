@@ -35,7 +35,7 @@
 uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"
 ```
 
-Ensure the Flappy CLI is present; if not:
+Build the CLI from the upstream [Flappy simulator sources](https://engineering.purdue.edu/SMARTLab/research/flappingflight) (follow their CMake instructions) and point this wrapper to the resulting binary:
 
 ```bash
 export FLAPPY_BIN=/path/to/flappy_cli
@@ -49,6 +49,7 @@ from flappy_mcp import FlappyRequest, run_flappy
 request = FlappyRequest(duration_s=5.0, timestep_s=0.01)
 response = run_flappy(request)
 print("Trajectory points:", len(response.trajectory))
+print("Metrics keys:", response.metrics.keys())
 ```
 
 ## Run as a service
@@ -109,7 +110,7 @@ uvx --with 'mcp==1.20.0' python scripts/integration/run_flappy.py
 ## Install & maintenance
 
 - **Runtime install:** follow the [Quickstart](#quickstart) `uv pip install "git+https://github.com/Three-Little-Birds/flappy-mcp.git"` step on machines that need the MCP wrapper.
-- **Validate dependencies:** set `FLAPPY_BIN` to the compiled `flappy_cli` path and run `$FLAPPY_BIN --help` once to confirm the binary is reachable.
+- **Validate dependencies:** set `FLAPPY_BIN` to the compiled `flappy_cli` path, run `$FLAPPY_BIN --help`, and confirm the simulator launches without interactive prompts.
 - **Keep fixtures in sync:** document any generated trajectories or fixture updates so downstream services can replay them reliably.
 
 ## Contributing
