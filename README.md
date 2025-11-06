@@ -44,12 +44,15 @@ export FLAPPY_BIN=/path/to/flappy_cli
 ### 2. Simulate a trajectory
 
 ```python
-from flappy_mcp import FlappyRequest, run_flappy
+from flappy_mcp import FlappyRequest, execute_flappy
 
-request = FlappyRequest(duration_s=5.0, timestep_s=0.01)
-response = run_flappy(request)
+request = FlappyRequest(
+    scenario=None,
+    fallback={"duration_s": 5.0, "timestep_s": 0.01},
+)
+response = execute_flappy(request)
 print("Trajectory points:", len(response.trajectory))
-print("Source:", response.source)              # \"generated\" or path to CLI JSON
+print("Source:", response.source)              # "generated" or path to CLI JSON
 print("First sample:", response.trajectory[0].model_dump())
 ```
 
