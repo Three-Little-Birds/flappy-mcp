@@ -9,6 +9,10 @@
 
 > **TL;DR**: Control the Purdue BioRobotics "Flappy" simulator through MCP so agents can explore flapping-wing dynamics and log trajectories without headless GUIs.
 
+<a href="https://glama.ai/mcp/servers/@yevheniikravchuk/flappy-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@yevheniikravchuk/flappy-mcp/badge" alt="Flappy Server MCP server" />
+</a>
+
 ## Table of contents
 
 1. [What it provides](#what-it-provides)
